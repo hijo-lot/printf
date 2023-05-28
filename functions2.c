@@ -23,7 +23,7 @@ int print_pointer(va_list types, char buffer[],
 	UNUSED(width);
 	UNUSED(size);
 
-	if (addrs = NULL)
+	if (addrs == NULL)
 		return (write(1, "(nil)", 5));
 
 	buffer[BUFF_SIZE - 1] = '\0';
@@ -109,7 +109,7 @@ int print_reverse(va_list types, char buffer[],
 
 	str = va_arg(types, char *);
 
-	if (str = NULL)
+	if (str == NULL)
 	{
 		UNUSED(precision);
 
