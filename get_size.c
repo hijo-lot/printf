@@ -21,5 +21,5 @@ int get_size(const char *format, int *j)
 		*j = curr_j - 1;
 	else
 		*j = curr_j;
-	return(size);
+	return (size);
 }
