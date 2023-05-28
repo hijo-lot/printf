@@ -30,6 +30,3 @@ int get_flags(const char *format, int *j)
 
 		return (flags);
 }
-
-
-
