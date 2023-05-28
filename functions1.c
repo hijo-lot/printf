@@ -1,6 +1,5 @@
 #include "main.h"
 
-/************************* PRINT UNSIGNED NUMBER *************************/
 /**
  * print_unsigned - Function to print an unsigned number
  * @types: List a of arguments
@@ -11,8 +10,8 @@
  * @size: Size specifier
  * Return: Number of chars printed.
  */
-int print_unsigned(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+	int print_unsigned(va_list types, char buffer[],
+		int flags, int width, int precision, int size)
 {
 	int j = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
@@ -33,7 +32,7 @@ int print_unsigned(va_list types, char buffer[],
 
 	return (write_unsgnd(0, j, buffer, flags, width, precision, size));
 	}
-/************* PRINT UNSIGNED NUMBER IN OCTAL  ****************/
+
 /**
  * print_octal - Prints an unsigned number using octal notation
  * @types: List of arguments
@@ -68,7 +67,7 @@ int print_octal(va_list types, char buffer[],
 	j++;
 
 	return (write_unsgnd(0, j, buffer, flags, width, precision, size));
-/************** PRINT UNSIGNED NUMBER IN HEXADECIMAL **************/
+
 /**
  * print_hexadecimal - Function to Print an unsigned number in hexadecimal notation
  * @types: the arguments list
@@ -85,7 +84,6 @@ int print_hexadecimal(va_list types, char buffer[],
 	return (print_hexa(types, "0123456789abcdef", buffer, flags, 'x', width, precision, size));
 }
 
-/************** PRINT UNSIGNED NUMBER IN UPPER HEXADECIMAL **************/
 /**
  * print_hexa_upper - Function to Print an unsigned number in upper  hexadecimal notation
  * @types: the arguments list
@@ -101,7 +99,7 @@ int print_hexa_upper(va_list types, char buffer[], 	int flags, int width, int pr
 	return (print_hexa(types, "0123456789ABCDEF", buffer,
 		flags, 'X', width, precision, size));
 }
-/************** PRINT HEXADECIMAL  NUMBER IN UPPER OR LOWER **************/
+
 /**
  * print_hexa - Function to Print an hexadecimal number in upper or lower
  * @types: the arguments list
