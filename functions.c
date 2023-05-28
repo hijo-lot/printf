@@ -82,7 +82,7 @@ int print_string(va_list types, char buffer[],
  * Return: number of character printed
  */
 
-int print_percent:(va_list types, char buffer[],
+int print_percent(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 
 {
@@ -171,7 +171,7 @@ int print_binary(va_list types, char buffer[],
 		s /= 2;
 		a[j] = (r / s) % 2;
 	}
-	for ( j = 0, sum = 0, count = 0; j < 32; j++)
+	for (j = 0, sum = 0, count = 0; j < 32; j++)
 	{
 		sum += a[j];
 		if (sum || j == 31)
