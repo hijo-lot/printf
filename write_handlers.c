@@ -17,7 +17,7 @@ int handle_write_char(char c, char buffer[],
 	char padd = ' ';
 
 	UNUSED(precision);
-	UNSUED(size);
+	UNUSED(size);
 
 	if (flags & F_ZERO)
 		padd = '0';
@@ -50,12 +50,12 @@ int handle_write_char(char c, char buffer[],
  */
 int write_flags(int is_negative, int ind, char buffer[], int flags, int width, int precision, int size)
 {
-	int lentgh = BuFF_SIZE - ind - 1;
-	char padd = ' ', extra_char = 0;
+	int lentgh = BUFF_SIZE - ind - 1;
+	char padd = ' ', extra_ch = 0;
 
 	UNUSED(size);
 
-	if ((flags & F_ZERO) !(flags & F_MINUS))
+	if ((flags & F_ZERO) && ! (flags & F_MINUS))
 		padd = '0';
 	if (is_negative)
 		extra_ch = '-';
@@ -65,7 +65,7 @@ int write_flags(int is_negative, int ind, char buffer[], int flags, int width, i
 		extra_ch = ' ';
 
 	return (write_num(ind, buffer, flags, width, precision,
-		length, padd, extra_ch));
+		lentgh, padd, extra_ch));
 }
 /**
  * write_num - Handle the  writing of a  number to a bufffer
@@ -79,43 +79,43 @@ int write_flags(int is_negative, int ind, char buffer[], int flags, int width, i
  */
 int write_num(int ind, char buffer[],
 	int flags, int width, int prec,
-	int length, char padd, char extra_c)
+	int lentgh, char padd, char extra_c)
 {
 	int j, padd_start = 1;
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0' && width == 0)
 		return (0);
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
 		 buffer[ind] = padd = ' ';
-	if (prec > 0 && prec < length)
+	if (prec > 0 && prec < lentgh)
 		padd = ' ';
-	while (prec > length)
-		buffer[--ind] = '0', length++;
+	while (prec > lentgh)
+		buffer[--ind] = '0', lentgh++;
 	if (extra_c != 0)
-		length++;
-	if (width > length)
+		lentgh++;
+	if (width > lentgh)
 	{
-		for (j = 1; j < width - length + 1; j++)
+		for (j = 1; j < width - lentgh + 1; j++)
 			buffer[j] = padd;
 		buffer[j] = '\0';
 		if (flags & F_MINUS && padd == ' ')
 		{
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return (write(1, &buffer[ind], length) + write(1, &buffer[1], j - 1));
+			return (write(1, &buffer[ind], lentgh) + write(1, &buffer[1], j - 1));
 		}
 		else if (!(flags & F_MINUS) && padd == ' ')
 		{
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return (write(1, &buffer[1], j - 1) + write(1, &buffer[ind], length));
+			return (write(1, &buffer[1], j - 1) + write(1, &buffer[ind], lentgh));
 		}
-		else if (!(flags & F_Minus) && padd == '0')
+		else if (!(flags & F_MINUS) && padd == '0')
 
 		{
 			if (extra_c)
 				buffer[--padd_start] = extra_c;
-			return (write(1, &buffer[padd_start], j - padd_start)
-					write(1, &buffer[ind], lentgh - (1 - padd_start)))
+			return (write(1, &buffer[padd_start], j - padd_start))
+					write(1, &buffer[ind], lentgh - (1 - padd_start));
 		}
 	}
 	if (extra_c)
@@ -143,10 +143,10 @@ int write_unsgnd(int is_negative, int ind,
 
 	if (precision == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0') 
 		return (0);
-	if (precision > lentgh && precision < length)
+	if (precision > lentgh && precision < lentgh)
 		padd = ' ';
 
-	while (precision > length)
+	while (precision > lentgh)
 	{
 		buffer[--ind] = '0';
 		lentgh++;
@@ -156,21 +156,21 @@ int write_unsgnd(int is_negative, int ind,
 
 	if (width > lentgh)
 	{
-		for (j = 0; j < width - length; j++)
+		for (j = 0; j < width - lentgh; j++)
 			  buffer[j] = padd;
 		buffer[j] = '\0';
 
 		if (flags & F_MINUS)
 		{
-			return (write(1, &buffer[ind], length) + write(1, &buffer[0], j));
+			return (write(1, &buffer[ind], lentgh) + write(1, &buffer[0], j));
 		}
 		else
 		{
-			return (write(1, &buffer[0], j) + write(1, &buffer[ind], length));
+			return (write(1, &buffer[0], j) + write(1, &buffer[ind], lentgh));
 		}
 	}
 
-	return (write(1, &buffer[ind], length));
+	return (write(1, &buffer[ind], lentgh));
 }
 /**
  * write_pointer - Output  a memory address to the buffer
@@ -191,7 +191,7 @@ int write_pointer(char buffer[], int ind, int length,
 	int j;
 	if (width > length)
 	{
-		for (j = 3; j < width - lentgh + 3; j++)
+		for (j = 3; j < width - length + 3; j++)
 			buffer[j] = padd;
 		buffer[j] = '\0';
 		if (flags & F_MINUS && padd == ' ')
