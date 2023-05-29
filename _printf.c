@@ -8,6 +8,7 @@ void print_buffer(char buffer[], int *buff_ind);
  * Return: Printed chars.
  */
 int _printf(const char *format, ...)
+
 {
 	int j, printed = 0, printed_chars = 0;
 	int flags, size, precision, width, buff_ind = 0;
@@ -21,7 +22,7 @@ int _printf(const char *format, ...)
 
 	for (j = 0; format && format[j] != '\0'; j++)
 	{
-		if (*format != '%')
+		if (format[j] != '%')
 	{
 		buffer[buff_ind++] = format[j];
 		if (buff_ind == BUFF_SIZE)
@@ -39,24 +40,27 @@ int _printf(const char *format, ...)
 	++j;
 	printed = handle_print(format, &j, list, buffer,
 			flags, width, precision, size);
-	if (printed == 1)
-	{
-		va_end(list);
+	if (printed == -1)
 		return (-1);
-	}
 	printed_chars += printed;
-	format++;
+	}
+	}
+
 	print_buffer(buffer, &buff_ind);
+
 	va_end(list);
+
 	return (printed_chars);
+}
 
 /**
-* print_buffer -Prints the contents of the buffer in case it exists
+* print_buffer - a function that prints the contents of the buffer
 * @buffer:  An Array of chars
 * @buff_ind: represents the length.
  */
 
-	void print_buffer(char buffer[], int *buff_ind)
+void print_buffer(char buffer[], int *buff_ind)
+
 {
 	if (*buff_ind > 0)
 		write(1, &buffer[0], *buff_ind);

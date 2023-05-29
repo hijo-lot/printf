@@ -51,13 +51,13 @@ int is_digit(char c)
 }
 
 /**
- * convert_size_unsgnd - Converts a number to the specified size
- * @num: Number to be converted
- * @size: Size indicating  the target type of conversion.
+ * convert_size_number - a function that casts a number
+ * @num: Numbe that will be casted
+ * @size: Size
  *
- * Return: The converted value of num
+ * Return: casted value of num
  */
-long int convert_size_unsgnd(unsigned long int num, int size)
+long int convert_size_number(long int num, int size)
 {
 	if (size == S_LONG)
 		return (num);
@@ -74,10 +74,13 @@ long int convert_size_unsgnd(unsigned long int num, int size)
  * Return: Casted value of num
  */
 long int convert_size_unsgnd(unsigned long int num, int size)
+
 {
-	if (size == S_SHORT)
+	if(size == S_LONG)
+		return (num);
+	else if (size == S_SHORT)
 		return ((unsigned short)num);
 
-	return ((unsignes int)num);
+	return ((unsigned int)num);
 }
 
