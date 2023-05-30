@@ -183,7 +183,7 @@ int write_unsgnd(int is_negative, int ind,
  * @extra_c:  Extra character
  * @padd_start: Index at which padding should start
  *
- * Return: Number of chars printed.
+ * Return: Number of chars outputted.
  */
 int write_pointer(char buffer[], int ind, int length,
 	int width, int flags, char padd, char extra_c, int padd_start)
