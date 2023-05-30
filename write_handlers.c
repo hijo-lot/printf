@@ -32,10 +32,10 @@ int handle_write_char(char c, char buffer[],
 			buffer[BUFF_SIZE - j - 2] = padd;
 
 		if (flags & F_MINUS)
-			return (write(1, &buffer[0], 1) +
+			return (write(1, &buffer[0], 1)
 					write(1, &buffer[BUFF_SIZE - j - 1], width - 1));
 		else
-			return (write(1, &buffer[BUFF_SIZE - j  - 1], width - 1) +
+			return (write(1, &buffer[BUFF_SIZE - j  - 1], width - 1)
 					write(1, &buffer[0], 1));
 		}
 	return (write(1, &buffer[0], 1));
@@ -116,8 +116,8 @@ int write_num(int ind, char buffer[],
 		{
 			if (extra_c)
 				buffer[--padd_start] = extra_c;
-			return (write(1, &buffer[padd_start], j - padd_start)) +
-					write(1, &buffer[ind], lentgh - (1 - padd_start));
+			return (write(1, &buffer[padd_start], j - padd_start) +
+				write(1, &buffer[ind], lentgh - (1 - padd_start)));
 		}
 	}
 	if (extra_c)
@@ -185,7 +185,7 @@ int write_unsgnd(int is_negative, int ind,
  * @extra_c:  Extra character
  * @padd_start: Index at which padding should start
  *
- * Return: Number of chars printed.
+ * Return: Number of chars outputted.
  */
 int write_pointer(char buffer[], int ind, int length,
 	int width, int flags, char padd, char extra_c, int padd_start)
@@ -204,30 +204,31 @@ int write_pointer(char buffer[], int ind, int length,
 			 buffer[--ind] = '0';
 			 if (extra_c)
 				 buffer[--ind] = extra_c;
-			 return ((write(1, &buffer[ind], length) + write(1, &buffer[3], j - 3)));
+			 return (write(1, &buffer[ind], length) + write(1, &buffer[3], j - 3));
 		}
 		else if (!(flags & F_MINUS) && padd == ' ')
 		{
-			 buffer[--ind] = 'x';
-                         buffer[--ind] = '0';
-			 if (extra_c)
-                               buffer[--ind] = extra_c;
-			 return ((write(1, &buffer[3], j - 3) + write(1, &buffer[ind], length)));
+			buffer[--ind] = 'x';
+			buffer[--ind] = '0';
+			if (extra_c)
+				buffer[--ind] = extra_c;
+			return (write(1, &buffer[3], j - 3) + write(1, &buffer[ind], length));
 		}
 		else if (!(flags & F_MINUS) && padd == '0')
 		{
 			if (extra_c)
 				buffer[--padd_start] = extra_c;
-			buffer[1] = 'x';
-                        	buffer[2] = '0';
-			return (write(1, &buffer[padd_start], j - padd_start) +
+			buffer[1] = '0';
+			buffer[2] = 'x';
+			return (write(1, &buffer[padd_start], j - padd_start)
 				write(1, &buffer[ind], length - (1 - padd_start) - 2));
 		}
 		}
-			 buffer[--ind] = 'x';
-                	 buffer[--ind] = '0';
-                 	if (extra_c)
-                       		buffer[--ind] = extra_c;
+
+	buffer[--ind] = 'x';
+	buffer[--ind] = '0';
+	if (extra_c)
+		buffer[--ind] = extra_c;
 		 return ((write(1, &buffer[ind], BUFF_SIZE - ind - 1)));
 }
 
