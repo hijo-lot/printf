@@ -52,7 +52,7 @@ int handle_write_char(char c, char buffer[],
  * @size: size
  * Return: Number of chars that have been  outputted.
  */
-int write_flags(int is_negative, int ind, char buffer[],
+int write_number(int is_negative, int ind, char buffer[],
 		int flags, int width, int precision, int size)
 {
 	int length = BUFF_SIZE - ind - 1;
