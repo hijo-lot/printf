@@ -92,7 +92,7 @@ int print_percent(va_list types, char buffer[],
 	UNUSED(width);
 	UNUSED(size);
 	UNUSED(precision);
-	return (write(1, "%", 1));
+	return (write(1, "%%", 1));
 }
 
 /**
@@ -118,7 +118,7 @@ int print_int(va_list types, char buffer[],
 	n = convert_size_number(n, size);
 
 	if (n == 0)
-		buffer[j--] = '\0';
+		buffer[j--] = '0';
 
 	buffer[BUFF_SIZE - 1] = '\0';
 	num = (unsigned long int)n;
