@@ -48,14 +48,15 @@ int handle_write_char(char c, char buffer[],
  *
  * Return: Number of chars that have been  outputted.
  */
-int write_flags(int is_negative, int ind, char buffer[], int flags, int width, int precision, int size)
+int write_flags(int is_negative, int ind, char buffer[],
+		int flags, int width, int precision, int size)
 {
 	int lentgh = BUFF_SIZE - ind - 1;
 	char padd = ' ', extra_ch = 0;
 
 	UNUSED(size);
 
-	if ((flags & F_ZERO) && ! (flags & F_MINUS))
+	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		padd = '0';
 	if (is_negative)
 		extra_ch = '-';
@@ -82,6 +83,7 @@ int write_num(int ind, char buffer[],
 	int lentgh, char padd, char extra_c)
 {
 	int j, padd_start = 1;
+
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0' && width == 0)
 		return (0);
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
@@ -141,7 +143,7 @@ int write_unsgnd(int is_negative, int ind,
 	UNUSED(is_negative);
 	UNUSED(size);
 
-	if (precision == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0') 
+	if (precision == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
 		return (0);
 	if (precision > lentgh && precision < lentgh)
 		padd = ' ';
@@ -187,9 +189,11 @@ int write_unsgnd(int is_negative, int ind,
  */
 int write_pointer(char buffer[], int ind, int length,
 	int width, int flags, char padd, char extra_c, int padd_start)
+
 {
 	int j;
 	if (width > length)
+
 	{
 		for (j = 3; j < width - length + 3; j++)
 			buffer[j] = padd;
