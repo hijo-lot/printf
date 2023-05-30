@@ -52,7 +52,7 @@ int is_digit(char c)
 
 /**
  * convert_size_number - a function that casts a number
- * @num: Numbe that will be casted
+ * @num: Number that will be casted
  * @size: Size
  *
  * Return: casted value of num
@@ -71,7 +71,7 @@ long int convert_size_number(long int num, int size)
  * convert_size_unsgnd - Converts a number to the specified size
  * @size: size
  * @num: number
- * Return: Casted value of num
+ * Return: Convert  value of num
  */
 long int convert_size_unsgnd(unsigned long int num, int size)
 
