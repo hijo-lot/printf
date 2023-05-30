@@ -2,7 +2,7 @@
 
 /**
  * get_flags - Active flags to calculate
- * @format: Formatted string used for an argument printing
+ * @format: Formatted string used for an argument outputted
  * @j: A parameter to analyze
  * Return: Flags:
  */
