@@ -115,7 +115,7 @@ int write_num(int ind, char buffer[],
 			if (extra_c)
 				buffer[--padd_start] = extra_c;
 			return (write(1, &buffer[padd_start], j - padd_start) +
-				write(1, &buffer[ind], length - (1 - padd_start)));
+				write(1, &buffer[ind], lentgh - (1 - padd_start)));
 		}
 	}
 	if (extra_c)
@@ -200,7 +200,7 @@ int write_pointer(char buffer[], int ind, int length,
 			 buffer[--ind] = '0';
 			 if (extra_c)
 				 buffer[--ind] = extra_c;
-			 return ((write(1, &buffer[ind], length) + write(1, &buffer[3], j - 3)));
+			 return (write(1, &buffer[ind], length) + write(1, &buffer[3], j - 3));
 		}
 		else if (!(flags & F_MINUS) && padd == ' ')
 		{
@@ -208,7 +208,7 @@ int write_pointer(char buffer[], int ind, int length,
 			buffer[--ind] = '0';
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return ((write(1, &buffer[3], j - 3) + write(1, &buffer[ind], length)));
+			return (write(1, &buffer[3], j - 3) + write(1, &buffer[ind], length));
 		}
 		else if (!(flags & F_MINUS) && padd == '0')
 		{
@@ -220,7 +220,7 @@ int write_pointer(char buffer[], int ind, int length,
 				write(1, &buffer[ind], length - (1 - padd_start) - 2));
 		}
 		}
-		}
+
 	buffer[--ind] = 'x';
 	buffer[--ind] = '0';
 	if (extra_c)
