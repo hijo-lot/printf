@@ -8,7 +8,7 @@
  * @precision: Specification of precision
  * @size: Size specifier
  *
- * Return: Number of chars that have outputted
+ * Return: Number of characters that have outputted
  */
 int handle_write_char(char c, char buffer[],
 	int flags, int width, int precision, int size)
@@ -82,7 +82,7 @@ int write_number(int is_negative, int ind, char buffer[],
  * @prec: precision
  * @width: width
  * @flags: calculate
- * Return: Number of printed chars.
+ * Return: Number of the outputted characters.
  */
 int write_num(int ind, char buffer[],
 	int flags, int width, int prec,
