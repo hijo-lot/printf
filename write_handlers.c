@@ -32,10 +32,10 @@ int handle_write_char(char c, char buffer[],
 			buffer[BUFF_SIZE - j - 2] = padd;
 
 		if (flags & F_MINUS)
-			return (write(1, &buffer[0], 1)
+			return (write(1, &buffer[0], 1) +
 					write(1, &buffer[BUFF_SIZE - j - 1], width - 1));
 		else
-			return (write(1, &buffer[BUFF_SIZE - j  - 1], width - 1)
+			return (write(1, &buffer[BUFF_SIZE - j  - 1], width - 1) +
 					write(1, &buffer[0], 1));
 		}
 	return (write(1, &buffer[0], 1));
@@ -45,13 +45,17 @@ int handle_write_char(char c, char buffer[],
  * write_number - Handle the printing of a number
  * @is_negative: Flag indicating if the number is negative
  * @ind: char types.
- *
+ * @buffer: array
+ * @flags: calculate
+ * @width: width
+ * @precision: precision
+ * @size: size
  * Return: Number of chars that have been  outputted.
  */
 int write_flags(int is_negative, int ind, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	int lentgh = BUFF_SIZE - ind - 1;
+	int length = BUFF_SIZE - ind - 1;
 	char padd = ' ', extra_ch = 0;
 
 	UNUSED(size);
@@ -66,7 +70,7 @@ int write_flags(int is_negative, int ind, char buffer[],
 		extra_ch = ' ';
 
 	return (write_num(ind, buffer, flags, width, precision,
-		lentgh, padd, extra_ch));
+		length, padd, extra_ch));
 }
 /**
  * write_num - Handle the  writing of a  number to a bufffer
@@ -75,12 +79,14 @@ int write_flags(int is_negative, int ind, char buffer[],
  * @length: Lentgh of the number
  * @padd: Pading character
  * @extra_c: Extra character to include
- *
+ * @prec: precision
+ * @width: width
+ * @flags: calculate
  * Return: Number of printed chars.
  */
 int write_num(int ind, char buffer[],
 	int flags, int width, int prec,
-	int lentgh, char padd, char extra_c)
+	int length, char padd, char extra_c)
 {
 	int j, padd_start = 1;
 
@@ -88,28 +94,28 @@ int write_num(int ind, char buffer[],
 		return (0);
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
 		 buffer[ind] = padd = ' ';
-	if (prec > 0 && prec < lentgh)
+	if (prec > 0 && prec < length)
 		padd = ' ';
-	while (prec > lentgh)
-		buffer[--ind] = '0', lentgh++;
+	while (prec > length)
+		buffer[--ind] = '0', length++;
 	if (extra_c != 0)
-		lentgh++;
-	if (width > lentgh)
+		length++;
+	if (width > length)
 	{
-		for (j = 1; j < width - lentgh + 1; j++)
+		for (j = 1; j < width - length + 1; j++)
 			buffer[j] = padd;
 		buffer[j] = '\0';
 		if (flags & F_MINUS && padd == ' ')
 		{
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return (write(1, &buffer[ind], lentgh) + write(1, &buffer[1], j - 1));
+			return (write(1, &buffer[ind], length) + write(1, &buffer[1], j - 1));
 		}
 		else if (!(flags & F_MINUS) && padd == ' ')
 		{
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return (write(1, &buffer[1], j - 1) + write(1, &buffer[ind], lentgh));
+			return (write(1, &buffer[1], j - 1) + write(1, &buffer[ind], length));
 		}
 		else if (!(flags & F_MINUS) && padd == '0')
 
@@ -117,12 +123,12 @@ int write_num(int ind, char buffer[],
 			if (extra_c)
 				buffer[--padd_start] = extra_c;
 			return (write(1, &buffer[padd_start], j - padd_start) +
-				write(1, &buffer[ind], lentgh - (1 - padd_start)));
+				write(1, &buffer[ind], length - (1 - padd_start)));
 		}
 	}
 	if (extra_c)
 		 buffer[--ind] = extra_c;
-	return (write(1, &buffer[ind], lentgh));
+	return (write(1, &buffer[ind], length));
 }
 
 /**
@@ -130,14 +136,17 @@ int write_num(int ind, char buffer[],
  * @is_negative: Shows if the num is negative or not
  * @ind: Starting index of the number in the buffer
  * @buffer: Array of chars
- *
+ * @flags: calculate
+ * @width: width
+ * @precision: precision
+ * @size: size
  * Return: Number of the chars outputted.
  */
-int write_unsgnd(int is_negative, int ind,
-	char buffer[],
+int write_unsgnd(int is_negative, int ind, char buffer[],
 	int flags, int width, int precision, int size)
+
 {
-	int lentgh = BUFF_SIZE - ind - 1, j = 0;
+	int length = BUFF_SIZE - ind - 1, j = 0;
 	char padd = ' ';
 
 	UNUSED(is_negative);
@@ -145,34 +154,34 @@ int write_unsgnd(int is_negative, int ind,
 
 	if (precision == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
 		return (0);
-	if (precision > lentgh && precision < lentgh)
+	if (precision > length && precision < length)
 		padd = ' ';
 
-	while (precision > lentgh)
+	while (precision > length)
 	{
 		buffer[--ind] = '0';
-		lentgh++;
+		length++;
 	}
 	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		padd = '0';
 
-	if (width > lentgh)
+	if (width > length)
 	{
-		for (j = 0; j < width - lentgh; j++)
+		for (j = 0; j < width - length; j++)
 			  buffer[j] = padd;
 		buffer[j] = '\0';
 
 		if (flags & F_MINUS)
 		{
-			return (write(1, &buffer[ind], lentgh) + write(1, &buffer[0], j));
+			return (write(1, &buffer[ind], length) + write(1, &buffer[0], j));
 		}
 		else
 		{
-			return (write(1, &buffer[0], j) + write(1, &buffer[ind], lentgh));
+			return (write(1, &buffer[0], j) + write(1, &buffer[ind], length));
 		}
 	}
 
-	return (write(1, &buffer[ind], lentgh));
+	return (write(1, &buffer[ind], length));
 }
 /**
  * write_pointer - Output  a memory address to the buffer
@@ -192,6 +201,7 @@ int write_pointer(char buffer[], int ind, int length,
 
 {
 	int j;
+
 	if (width > length)
 
 	{
@@ -220,7 +230,7 @@ int write_pointer(char buffer[], int ind, int length,
 				buffer[--padd_start] = extra_c;
 			buffer[1] = '0';
 			buffer[2] = 'x';
-			return (write(1, &buffer[padd_start], j - padd_start)
+			return (write(1, &buffer[padd_start], j - padd_start) +
 				write(1, &buffer[ind], length - (1 - padd_start) - 2));
 		}
 		}
@@ -231,37 +241,3 @@ int write_pointer(char buffer[], int ind, int length,
 		buffer[--ind] = extra_c;
 		 return ((write(1, &buffer[ind], BUFF_SIZE - ind - 1)));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
