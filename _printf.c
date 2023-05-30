@@ -55,7 +55,7 @@ int _printf(const char *format, ...)
 
 /**
 * print_buffer - a function that prints the contents of the buffer
-* @buffer:  An Array of chars
+* @buffer:  An Array of characters
 * @buff_ind: represents the length.
  */
 
